@@ -1,0 +1,180 @@
+[
+    {
+        "id": "dec9dd98.4ce16",
+        "type": "tab",
+        "label": "Customer Help Desk",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "93ec9766.dfd7d8",
+        "type": "watson-conversation-v1",
+        "z": "dec9dd98.4ce16",
+        "name": "",
+        "workspaceid": "26651bae-f42e-47bf-95c3-7140c3c36a12",
+        "multiuser": false,
+        "context": false,
+        "empty-payload": false,
+        "service-endpoint": "https://api.eu-gb.assistant.watson.cloud.ibm.com/instances/2d2bef7d-afe3-490f-8194-33b8941fb348",
+        "timeout": "",
+        "optout-learning": false,
+        "x": 440,
+        "y": 120,
+        "wires": [
+            [
+                "4886c514.3c07bc",
+                "8772b6b8.a9a018"
+            ]
+        ]
+    },
+    {
+        "id": "4886c514.3c07bc",
+        "type": "debug",
+        "z": "dec9dd98.4ce16",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "8772b6b8.a9a018",
+        "type": "function",
+        "z": "dec9dd98.4ce16",
+        "name": "parsing",
+        "func": "msg.payload.text=\"\";\nif(msg.payload.context.webhook_result_1){\n    for(var i in msg.payload.context.webhook_result_1.results){\n    msg.payload.text=msg.payload.text+\"\\n\"+msg.payload.context.webhook_result_1.results[i].text;\n}\n    msg.payload=msg.payload.text;\n}\n\nelse\nmsg.payload = msg.payload.output.text[0];\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 240,
+        "wires": [
+            [
+                "c1002980.e29e18",
+                "3a94f8fc.34af98"
+            ]
+        ]
+    },
+    {
+        "id": "3a94f8fc.34af98",
+        "type": "debug",
+        "z": "dec9dd98.4ce16",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "79aeb104.fa8cc",
+        "type": "function",
+        "z": "dec9dd98.4ce16",
+        "name": "input parsing",
+        "func": "msg.payload=msg.payload.text;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "93ec9766.dfd7d8",
+                "86235094.28667"
+            ]
+        ]
+    },
+    {
+        "id": "86235094.28667",
+        "type": "ui_text",
+        "z": "dec9dd98.4ce16",
+        "group": "41cd19d0.d19908",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "You",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 390,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c1002980.e29e18",
+        "type": "ui_text",
+        "z": "dec9dd98.4ce16",
+        "group": "41cd19d0.d19908",
+        "order": 6,
+        "width": 18,
+        "height": 8,
+        "name": "",
+        "label": "Bot",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 570,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "1ca09ec0.194ce1",
+        "type": "ui_form",
+        "z": "dec9dd98.4ce16",
+        "name": "",
+        "label": "Enter your Query",
+        "group": "41cd19d0.d19908",
+        "order": 1,
+        "width": 7,
+        "height": 3,
+        "options": [
+            {
+                "label": "",
+                "value": "text",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "text": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "79aeb104.fa8cc"
+            ]
+        ]
+    },
+    {
+        "id": "41cd19d0.d19908",
+        "type": "ui_group",
+        "z": "",
+        "name": "",
+        "tab": "c6bcceb0.84ac3",
+        "order": 1,
+        "disp": true,
+        "width": "27",
+        "collapse": false
+    },
+    {
+        "id": "c6bcceb0.84ac3",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Customer Help Desk",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
